@@ -81,7 +81,7 @@ Basic template for one variable:
 <int_or_float_or_str:hint>
 ```
 
-## Templates parsing
+## Templates parsing and rendering
 As template render Alice_WSGI use Jinja2. Implemented three methods:
 ```
 import from alice_wsgi.templates render_string, render_template, jinja_render_template

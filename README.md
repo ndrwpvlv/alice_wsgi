@@ -132,7 +132,7 @@ class Config:
     STATIC_PATH = '{}/static/'.format(os.path.dirname(os.path.abspath(__file__)))
 
 ```
-**__init__.py**
+**\_\_init__.py**
 ```
 from alice_wsgi import Alice
 from example_app.config import Config

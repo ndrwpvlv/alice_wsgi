@@ -39,7 +39,7 @@ def get(self, *args, **kwargs):
     return 'It is get', 'text/plain', 200
 ``` 
 ### Routes
-For make route import Views with **router.add_route()** of Alice() instance. **Be careful decorators is implemented as wrappers around based function. Upgrade of it is in ToDo**
+To make route you need to import Views with **router.add_route()** of Alice() instance. **Be careful decorators is implemented as wrappers around based function. Upgrade of it is in ToDo**
 ```
 app.router.add_route('/path/', ViewClass, ('GET','POST', and other allowed methods), (decorators, ))
 ```
@@ -52,7 +52,7 @@ app.router.add_route('/', View, ('GET', 'POST', ))
 ```
 
 ### Redirects
-Redirects is realized similar as **router.add_route()** function **router.add_redirect()**:
+Redirects is realized similar as **router.add_route()** method **router.add_redirect()**:
 ```
 app.router.add_redirect('/path/', '/redirect_path/', 302)
 ```
@@ -64,8 +64,8 @@ app.router.add_error_handler(error_code, handler_class)
 
 ## Variables
 
-Alice_WSGI support receiving of variables values from get or post query and with setup path variables templates.
-Be careful if request method is GET Alice_WSGI will parse GET variables, if method POST the GET variables will be ignored.
+Alice_WSGI support a receiving of variables values from get or post query and with setup path variables templates.
+Be careful if request method is GET Alice_WSGI will parse GET variables, if method POST the query GET variables will be ignored.
 
 ### Path templates and variables
 Path variables is implemented with path templates. 
@@ -74,7 +74,7 @@ Example:
 ```
 app.router.add_route('/user/<int:age>/<float:height>/<str:nickname>/', View, ('GET', ))
 ``` 
-You can setup **int**, **float**, and **str** types. After **:** you should enter hint of variable name. 
+You can setup **int**, **float**, and **str** types. After "**:**" you should enter hint of variable name. 
 
 Basic template for one variable:
 ```
@@ -82,13 +82,13 @@ Basic template for one variable:
 ```
 
 ## Templates parsing
-As template render Alice_WSGI use Jinja2. Now implemented three methods:
+As template render Alice_WSGI use Jinja2. Implemented three methods:
 ```
-import from alice_wsgi.templates render_string, render_template
+import from alice_wsgi.templates render_string, render_template, jinja_render_template
 
+jinja_render_template(env: object, template_name: str, *args, **kwargs) -> str
 render_string(template_str: str, *args, **kwargs) -> str
 render_template(template_path: str, *args, **kwargs) -> str
-jinja_render_template(env: object, template_name: str, *args, **kwargs) -> str
 ```
 General methods is:
 ```

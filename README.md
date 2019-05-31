@@ -26,10 +26,10 @@ def post(self, *args, **kwargs):
 def put(self, *args, **kwargs):
     return 'It is put'
     
-def get(self, *args, **kwargs):
+def patch(self, *args, **kwargs):
     return 'It is patch'
     
-def get(self, *args, **kwargs):
+def delete(self, *args, **kwargs):
     return 'It is delete'
 ```
 If you need to use custom mime or http response code **View** can be modified:

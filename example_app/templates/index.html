@@ -1,0 +1,70 @@
+{% extends "default.html" %}
+
+{% block title %}
+<title>Index :: GET</title>
+<meta name="description" content="One of otus shops from homeworks">
+{% endblock %}
+
+{% block content %}
+<main class="margin-top-20px">
+    <div class="container">
+        <div class="row">
+            <h1>Hello GET!</h1><br>
+        </div>
+        <div class="row">
+            <p>
+                <a href="/text/10/1.0/">Link with path variables</a><br>
+                <a href="/contacts/">Redirect</a>
+            </p>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form action="/" method="get">
+                    <b>GET FORM</b><br>
+                    First name:<br>
+                    <input type="text" name="firstname"><br>
+                    Last name:<br>
+                    <input type="text" name="lastname">
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+            <div class="col">
+                <form action="/" method="post">
+                    <b>POST FORM</b><br>
+                    First name:<br>
+                    <input type="text" name="firstname"><br>
+                    Last name:<br>
+                    <input type="text" name="lastname">
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            {% if path_vars %}
+            <div class="card margin-20px">
+                <div class="card-body">
+                    <h5 class="card-title">Variables</h5>
+                    <ul id="vars">
+                    {% for var in path_vars %}
+                        <li>{{ var }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+            {% if query %}
+            <div class="card margin-20px">
+                <div class="card-body">
+                    <h5 class="card-title">Variables</h5>
+                    <ul id="query">
+                    {% for key in query %}
+                    <li>{{ key }}: {{ query[key] }}</li>
+                {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</main>
+{% endblock %}

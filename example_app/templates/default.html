@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% block title %}
+    {% endblock %}
+    {% include 'components/head.html' %}
+    {% block header_scripts %}
+    {% endblock %}
+</head>
+<body class="body-color">
+{% include 'components/header.html' %}
+
+{% block content %}
+{% endblock %}
+
+{% include 'components/footer.html' %}
+
+{% block footer_scripts %}
+{% endblock %}
+</body>
+</html>

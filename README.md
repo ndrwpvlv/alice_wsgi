@@ -1,6 +1,6 @@
 # Alice_WSGI
 
-**Alice_WSGI** is simple wsgi framework. It was made as six homework of OTUS Python course. 
+**Alice_WSGI** is simple wsgi framework. It was made as fourth homework of OTUS Python course. 
 
 
 ## Basic usage

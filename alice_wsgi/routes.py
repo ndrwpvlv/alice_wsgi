@@ -82,10 +82,10 @@ class Router:
             match[1] = tuple() if match[1].startswith('/') else tuple([match[1], ])
         return match
 
-    def find_route(self, request: dict):
+    def find_route_or_404(self, request: dict):
         """
         Route finder.
-        1) find_route check routes dict.
+        1) find_route_or_404 check routes dict.
         2) If in request exists not allowed method return 405
         3) Final return 404
 
@@ -147,10 +147,12 @@ class Router:
         elif not request['path'].endswith('/'):
             response = self.redirect_handler('{}/'.format(request['path']), 301)
         elif request['path'] in self.redirects:
-            response = self.redirect_handler(self.redirects.get(request['path'])['redirect_url'],
-                                             self.redirects.get(request['path'])['code'])
+            response = self.redirect_handler(
+                self.redirects.get(request['path'])['redirect_url'],
+                self.redirects.get(request['path'])['code'],
+            )
         else:
-            response = self.find_route(request)
+            response = self.find_route_or_404(request)
         return response
 
 

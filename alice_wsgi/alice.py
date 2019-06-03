@@ -41,7 +41,7 @@ class Alice:
         if request['extension'] and os.path.isfile(path):
             response = self.router.get_file(path, request)
         elif not request['path'].endswith('/'):
-            response = self.router.redirect_handler('{}/'.format(request['path']), 302)
+            response = self.router.redirect_handler('{}/'.format(request['path']), 301)
         else:
             response = self.router.find_route(request)
         start_response(response['status'], response['headers'])

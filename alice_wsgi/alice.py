@@ -33,7 +33,7 @@ class Alice:
 
         :param environ: wsgi environ dict
         :param start_response: wsgi response function
-        :return: response status, content_type, body or binary file
+        :return: response status, headers, body or binary file
         """
         self.start_response = start_response
         request = Request(environ).get_request()
@@ -42,5 +42,5 @@ class Alice:
             response = self.router.get_file(path, request)
         else:
             response = self.router.find_route(request)
-        start_response(response['status'], response['content_type'])
+        start_response(response['status'], response['headers'])
         return [binary_string(response['body'])]

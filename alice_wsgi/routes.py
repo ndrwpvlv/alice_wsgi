@@ -34,7 +34,7 @@ class Router:
 
     @staticmethod
     def redirect_handler(redirect_url: str, code: int, ):
-        return {'status': http_status(code), 'content_type': [('Location', redirect_url)], 'body': http_status}
+        return {'status': http_status(code), 'headers': [('Location', redirect_url)], 'body': http_status}
 
     @staticmethod
     def pattern_route(
@@ -124,7 +124,7 @@ class Router:
         :return: binary file as body and headers with status
         """
         with open(path, 'rb') as f:
-            return {'status': http_status(code), 'content_type': [('Content-type', request['mime']), (
+            return {'status': http_status(code), 'headers': [('Content-type', request['mime']), (
                 'Content-Length', str(os.path.getsize(path)))], 'body': f.read()}
 
     @staticmethod
@@ -144,7 +144,7 @@ class Router:
         return {
             'body': response[0],
             'status': http_status(response[2]),
-            'content_type': [('Content-type', response[1])],
+            'headers': [('Content-type', response[1])],
         }
 
 

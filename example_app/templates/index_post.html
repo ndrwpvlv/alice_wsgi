@@ -13,31 +13,10 @@
         </div>
         <div class="row">
             <p>
-                <a href="/text/10/1.0/">Link with path variables</a><br>
-                <a href="/contacts/">Redirect</a>
+                Test links with variable: <a href="/text/10/1.0/">/text/10/1.0/</a><br>
+                Redirect from <a href="/contacts/">Redirect</a> to <a href="/text/10/1.0/">Home page</a><br>
+                Redirect from <a href="/contacts">/contact</a> to <a href="/contacts/">/contacts/</a> and then to <a href="/text/10/1.0/">Home page</a><br>
             </p>
-        </div>
-        <div class="row">
-            <div class="col">
-                <form action="/" method="get">
-                    <b>GET FORM</b><br>
-                    First name:<br>
-                    <input type="text" name="firstname"><br>
-                    Last name:<br>
-                    <input type="text" name="lastname">
-                    <input type="submit" value="Submit">
-                </form>
-            </div>
-            <div class="col">
-                <form action="/" method="post">
-                    <b>POST FORM</b><br>
-                    First name:<br>
-                    <input type="text" name="firstname"><br>
-                    Last name:<br>
-                    <input type="text" name="lastname">
-                    <input type="submit" value="Submit">
-                </form>
-            </div>
         </div>
         <div class="row">
             {% if path_vars %}
@@ -64,6 +43,29 @@
                 </div>
             </div>
             {% endif %}
+        </div>
+        <div class="row">
+            <h2>Forms</h2>
+            <div class="col-12 margin-top-20px">
+                <form action="/" method="get">
+                    <b>GET FORM</b><br>
+                    First name:<br>
+                    <input type="text" name="firstname"><br>
+                    Last name:<br>
+                    <input type="text" name="lastname">
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+            <div class="col-12  margin-top-20px">
+                <form action="/" method="post">
+                    <b>POST FORM</b><br>
+                    First name:<br>
+                    <input type="text" name="firstname"><br>
+                    Last name:<br>
+                    <input type="text" name="lastname">
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
         </div>
     </div>
 </main>

@@ -37,12 +37,6 @@ class Alice:
         """
         self.start_response = start_response
         request = Request(environ).get_request()
-        path = '{}{}'.format(self.router.static_path, request['path']).replace('//', '/')
-        if request['extension'] and os.path.isfile(path):
-            response = self.router.get_file(path, request)
-        elif not request['path'].endswith('/'):
-            response = self.router.redirect_handler('{}/'.format(request['path']), 301)
-        else:
-            response = self.router.find_route(request)
+        response = self.router.response(request)
         start_response(response['status'], response['headers'])
         return [binary_string(response['body'])]

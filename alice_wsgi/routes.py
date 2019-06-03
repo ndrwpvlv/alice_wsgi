@@ -85,21 +85,14 @@ class Router:
     def find_route(self, request: dict):
         """
         Route finder.
-        1) find_route check redirects for path exists
-        2) If redirect not found than find_route check routes dict.
-        3) If in request exists not allowed method return 405
-        4) Final return 404
+        1) find_route check routes dict.
+        2) If in request exists not allowed method return 405
+        3) Final return 404
 
         :param request: dict from Request.get_request
         :return: Redirect, Errors 404 and 405, Response with headers and body.
         """
 
-        # REDIRECT
-        if request['path'] in self.redirects:  # REDIRECT
-            return self.redirect_handler(self.redirects.get(request['path'])['redirect_url'],
-                                         self.redirects.get(request['path'])['code'])
-
-        # ROUTE
         route = self.get_route(request['path'])
         if not route.get('route'):
             code = 404
@@ -146,6 +139,19 @@ class Router:
             'status': http_status(response[2]),
             'headers': [('Content-type', response[1])],
         }
+
+    def response(self, request):
+        path = '{}{}'.format(self.static_path, request['path']).replace('//', '/')
+        if request['extension'] and os.path.isfile(path):
+            response = self.get_file(path, request)
+        elif not request['path'].endswith('/'):
+            response = self.redirect_handler('{}/'.format(request['path']), 301)
+        elif request['path'] in self.redirects:
+            response = self.redirect_handler(self.redirects.get(request['path'])['redirect_url'],
+                                             self.redirects.get(request['path'])['code'])
+        else:
+            response = self.find_route(request)
+        return response
 
 
 def http_status(code: int, http_status_codes: dict = HTTP_STATUS_CODES, template: str = '{} {}'):

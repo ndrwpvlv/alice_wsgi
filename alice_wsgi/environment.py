@@ -3,9 +3,12 @@
 Alice_WSGI environment variables
 """
 
+import re
+
 METHODS_ALLOWED_GLOBAL = ('GET', 'POST', 'PUT', 'PATCH', 'DELETE',)
 TYPES_TEMPLATES = {'int': '([0-9]+)', 'float': '([0-9]+.[0-9]+)', 'str': '([a-zA-Z_-~%\.][a-zA-Z0-9_-~%\.]+)', }
-VARIABLE_PATTERN = '^<([a-z]+):([a-zA-Z0-9_]+)>$'
+VARIABLE_PATTERN = re.compile('^<([a-z]+):([a-zA-Z0-9_]+)>$')
+ALPHANUM_PATTERN = re.compile('[^a-zA-Z_0-9\s+]')
 
 HTTP_STATUS_CODES = {
     100: "Continue",
@@ -116,6 +119,8 @@ MIME_TYPES_MAP = {
     '.mht': 'message/rfc822',
     '.mhtml': 'message/rfc822',
     '.mif': 'application/x-mif',
+    '.mid': 'audio/midi',
+    '.midi': 'audio/midi',
     '.mjs': 'application/javascript',
     '.mov': 'video/quicktime',
     '.movie': 'video/x-sgi-movie',
@@ -132,12 +137,15 @@ MIME_TYPES_MAP = {
     '.o': 'application/octet-stream',
     '.obj': 'application/octet-stream',
     '.oda': 'application/oda',
+    '.pct': 'image/pict',
     '.p12': 'application/x-pkcs12',
     '.p7c': 'application/pkcs7-mime',
     '.pbm': 'image/x-portable-bitmap',
     '.pdf': 'application/pdf',
     '.pfx': 'application/x-pkcs12',
     '.pgm': 'image/x-portable-graymap',
+    '.pic': 'image/pict',
+    '.pict': 'image/pict',
     '.pl': 'text/plain',
     '.png': 'image/png',
     '.pnm': 'image/x-portable-anymap',
@@ -158,6 +166,7 @@ MIME_TYPES_MAP = {
     '.rdf': 'application/xml',
     '.rgb': 'image/x-rgb',
     '.roff': 'application/x-troff',
+    '.rtf': 'application/rtf',
     '.rtx': 'text/richtext',
     '.sgm': 'text/x-sgml',
     '.sgml': 'text/x-sgml',
@@ -194,6 +203,7 @@ MIME_TYPES_MAP = {
     '.xpdl': 'application/xml',
     '.xpm': 'image/x-xpixmap',
     '.xsl': 'application/xml',
+    '.xul': 'text/xul',
     '.xwd': 'image/x-xwindowdump',
     '.zip': 'application/zip',
 }

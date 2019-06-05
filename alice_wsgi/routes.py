@@ -37,19 +37,16 @@ class Router:
         return {'status': http_status(code), 'headers': [('Location', redirect_url)], 'body': http_status}
 
     @staticmethod
-    def pattern_route(
-            route: str, variables_patterns: str = VARIABLE_PATTERN, types_templates: dict = TYPES_TEMPLATES, ) -> str:
+    def pattern_route(route: str, ) -> str:
         """
         Create regex-pattern for route
         :param route: route path with variables pattern
-        :param variables_patterns: default pattern for finding variables in path
-        :param types_templates: regex-patterns for single types of variables (int, float, str)
         :return: regex-template
         """
         fields = path_split(route)
-        return '^/{}/$'.format('/'.join([types_templates.get(t[0][0]) if t[0] else t[1] for t in
-                                         [[flatten_list(re.findall(variables_patterns, f)), f] for f in
-                                          fields]])).replace('//', '/')
+        templates = [[flatten_list(VARIABLE_PATTERN.findall(f)), f] for f in fields]
+        return '^/{}/$'.format('/'.join([TYPES_TEMPLATES.get(t[0][0]) if t[0] else t[1] for t in templates])).replace(
+            '//', '/')
 
     def get_route(self, path: str) -> dict:
         """
@@ -94,17 +91,13 @@ class Router:
         """
 
         route = self.get_route(request['path'])
-        if not route.get('route'):
-            code = 404
+        code = 404 if not route.get('route') else 200 if request['method'] in route.get('route').get('methods') else 405
+        if code == 200:
+            view_cls = route.get('route').get('view_cls')
+            method = request['method'].lower()
+            body = getattr(view_cls(), method)(*route.get('path_variables'), **request.get('query'))
         else:
-            if request['method'] in route.get('route').get('methods'):
-                code = 200
-            else:
-                code = 405
-        body = getattr(route.get('route').get('view_cls')(), request['method'].lower())(
-            *route.get('path_variables'), **request.get('query')) if \
-            code == 200 else self.get_error_handler(code, request['method'])(code)
-
+            body = self.get_error_handler(code, request['method'])(code)
         return self.format_response(body, code, request['mime'])
 
     @staticmethod
@@ -156,5 +149,5 @@ class Router:
         return response
 
 
-def http_status(code: int, http_status_codes: dict = HTTP_STATUS_CODES, template: str = '{} {}'):
-    return template.format(code, http_status_codes.get(code) or http_status_codes.get(500))
+def http_status(code: int, template: str = '{} {}'):
+    return template.format(code, HTTP_STATUS_CODES.get(code) or HTTP_STATUS_CODES.get(500))

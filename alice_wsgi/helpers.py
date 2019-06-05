@@ -2,7 +2,8 @@
 
 import os
 
-from alice_wsgi.environment import MIME_TYPES_MAP, ALPHANUM_PATTERN
+from alice_wsgi.environment import ALPHANUM_PATTERN
+from alice_wsgi.mime import MIMETYPES
 
 
 def binary_string(s: any) -> bin:
@@ -13,8 +14,8 @@ def get_file_extension(path: str):
     return os.path.splitext(path)[1]
 
 
-def get_mime(extension: str) -> str:
-    mime_type = MIME_TYPES_MAP.get('.{}'.format(string_restrip(extension, ALPHANUM_PATTERN))) or 'text/html'
+def get_mime(extension: str, default_mime: str = 'text/html') -> str:
+    mime_type = MIMETYPES.get('.{}'.format(string_restrip(extension, ALPHANUM_PATTERN))) or default_mime
     return mime_type
 
 

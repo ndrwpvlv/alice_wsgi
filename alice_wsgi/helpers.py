@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import os
-import re
 
-from alice_wsgi.environment import MIME_TYPES_MAP
+from alice_wsgi.environment import MIME_TYPES_MAP, ALPHANUM_PATTERN
 
 
 def binary_string(s: any) -> bin:
@@ -15,7 +14,7 @@ def get_file_extension(path: str):
 
 
 def get_mime(extension: str) -> str:
-    mime_type = MIME_TYPES_MAP.get('.{}'.format(string_strip_alphanums(extension))) or 'text/html'
+    mime_type = MIME_TYPES_MAP.get('.{}'.format(string_restrip(extension, ALPHANUM_PATTERN))) or 'text/html'
     return mime_type
 
 
@@ -27,13 +26,13 @@ def wraps_func(func, decorators: list):
     :return: decorated function
     """
     if len(decorators) > 0:
-        for d in decorators:
-            func = d(func)
+        for decorator in decorators:
+            func = decorator(func)
     return func
 
 
-def string_strip_alphanums(s: str):
-    return re.sub('[^a-zA-Z_0-9\s+]', '', str(s))
+def string_restrip(s: str, regex_compiled) -> str:
+    return regex_compiled.sub('', str(s))
 
 
 def flatten_list(l: list or tuple) -> list:

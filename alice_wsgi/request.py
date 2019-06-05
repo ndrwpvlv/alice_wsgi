@@ -17,8 +17,7 @@ class Request:
         self.query = self.query_variables(
             self.environ.get('QUERY_STRING')) if self.method == 'GET' else self.post_query_variables()
         self.file_extension = get_file_extension(self.path) or None
-        self.mime = environ.get('HTTP_ACCEPT').split(',')[0] if environ.get('HTTP_ACCEPT') else get_mime(
-            self.file_extension)
+        self.mime = get_mime(self.file_extension)
 
     @staticmethod
     def query_variables(query):

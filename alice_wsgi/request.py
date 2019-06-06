@@ -1,7 +1,8 @@
 import urllib.parse as urlparse
 
 from .environment import METHODS_ALLOWED_GLOBAL
-from .helpers import get_mime, get_file_extension
+from .helpers import get_file_extension
+from .mime import MimeType
 
 
 class Request:
@@ -17,7 +18,7 @@ class Request:
         self.query = self.query_variables(
             self.environ.get('QUERY_STRING')) if self.method == 'GET' else self.post_query_variables()
         self.file_extension = get_file_extension(self.path) or None
-        self.mime = get_mime(self.file_extension)
+        self.mime = MimeType().get_by_extension(self.file_extension) or 'text/html'
 
     @staticmethod
     def query_variables(query):

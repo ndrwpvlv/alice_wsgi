@@ -1,3 +1,84 @@
+import os
+
+
+class MimeType:
+    def __init__(self):
+        self.basic_mimes = BASIC_MIMETYPES
+        self.mimes = MIMETYPES
+
+    def get_by_path(self, path: str) -> str:
+        return self.get_by_extension(os.path.splitext(path)[1])
+
+    def get_by_extension(self, extension: str) -> str:
+        return self.basic_mimes.get(extension) or self.mimes.get(extension) or None
+
+
+BASIC_MIMETYPES = {
+    '.3g2': 'video/3gpp2',
+    '.3gp': 'video/3gpp',
+    '.7z': 'application/x-7z-compressed',
+    '.aac': 'audio/aac',
+    '.abw': 'application/x-abiword',
+    '.arc': 'application/octet-stream',
+    '.avi': 'video/x-msvideo',
+    '.azw': 'application/vnd.amazon.ebook',
+    '.bin': 'application/octet-stream',
+    '.bz': 'application/x-bzip',
+    '.bz2': 'application/x-bzip2',
+    '.csh': 'application/x-csh',
+    '.css': 'text/css',
+    '.csv': 'text/csv',
+    '.doc': 'application/msword',
+    '.eot': 'application/vnd.ms-fontobject',
+    '.epub': 'application/epub+zip',
+    '.gif': 'image/gif',
+    '.htm': 'text/html',
+    '.html': 'text/html',
+    '.ico': 'image/x-icon',
+    '.ics': 'text/calendar',
+    '.jar': 'application/java-archive',
+    '.jpeg': 'image/jpeg',
+    '.jpg': 'image/jpeg',
+    '.js': 'application/javascript',
+    '.json': 'application/json',
+    '.mid': 'audio/midi',
+    '.midi': 'audio/midi',
+    '.mpeg': 'video/mpeg',
+    '.mpkg': 'application/vnd.apple.installer+xml',
+    '.odp': 'application/vnd.oasis.opendocument.presentation',
+    '.ods': 'application/vnd.oasis.opendocument.spreadsheet',
+    '.odt': 'application/vnd.oasis.opendocument.text',
+    '.oga': 'audio/ogg',
+    '.ogv': 'video/ogg',
+    '.ogx': 'application/ogg',
+    '.otf': 'font/otf',
+    '.pdf': 'application/pdf',
+    '.png': 'image/png',
+    '.ppt': 'application/vnd.ms-powerpoint',
+    '.rar': 'application/x-rar-compressed',
+    '.rtf': 'application/rtf',
+    '.sh': 'application/x-sh',
+    '.svg': 'image/svg+xml',
+    '.swf': 'application/x-shockwave-flash',
+    '.tar': 'application/x-tar',
+    '.tif': 'image/tiff',
+    '.tiff': 'image/tiff',
+    '.ts': 'video/vnd.dlna.mpeg-tts',
+    '.ttf': 'font/ttf',
+    '.vsd': 'application/vnd.visio',
+    '.wav': 'audio/x-wav',
+    '.weba': 'audio/webm',
+    '.webm': 'video/webm',
+    '.webp': 'image/webp',
+    '.woff': 'font/woff',
+    '.woff2': 'font/woff2',
+    '.xhtml': 'application/xhtml+xml',
+    '.xls': 'application/vnd.ms-excel',
+    '.xml': 'application/xml',
+    '.xul': 'application/vnd.mozilla.xul+xml',
+    '.zip': 'application/zip',
+}
+
 MIMETYPES = {
     '.3dml': 'text/vnd.in3d.3dml',
     '.3g2': 'video/3gpp2',

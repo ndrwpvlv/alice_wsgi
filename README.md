@@ -104,6 +104,21 @@ class Index(ClassView):
         return jinja_render_template(app.jinja, 'index.html', path_vars=path_vars or None, query=query or None)
 ```
 
+## Sections
+Sections is useful for creation large applications with modular system. To make section use Section class:
+```
+section = Section(url_prfix: str, config, static_path: str, templates_path: str)
+``` 
+Alice class is parent for Section class. Now you can use general Alice methods for section creation.
+For registration section use Alice.router.add_section() method.
+```
+# This is scheme not code
+app = Alice(...)
+section = Section(...)
+app.router.add_section(section)
+```
+add_section() updates general Alice.router.routes and Alice.router.redirects instance dicts.
+
 ## Basic app
 Let's make basic app with name example_app:
 ```

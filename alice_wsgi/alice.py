@@ -13,7 +13,7 @@ class Alice:
     Base class for Alice_WSGI framework
     """
 
-    def __init__(self, config):
+    def __init__(self, config, static_path: str = None, templates_path: str = None):
         """
         Class has two default handler classes:
         - router as alice_wsgi.routes.Router()
@@ -23,8 +23,10 @@ class Alice:
                        Required variables config.STATIC_PATH and config.TEMPLATES_PATH
         """
         self.config = config
-        self.router = Router(self.config.STATIC_PATH or '{}/static/'.format(os.getcwd()), )
-        self.jinja = Environment(loader=FileSystemLoader(self.config.TEMPLATES_PATH))
+        self.static_path = static_path or self.config.STATIC_PATH or '{}/static/'.format(os.getcwd())
+        self.templates_path = templates_path or self.config.TEMPLATES_PATH or '{}/templates/'.format(os.getcwd())
+        self.router = Router(self.static_path, )
+        self.jinja = Environment(loader=FileSystemLoader(self.templates_path))
         self.start_response = None
 
     def __call__(self, environ: dict, start_response):
@@ -40,3 +42,9 @@ class Alice:
         response = self.router.response(request)
         start_response(response['status'], response['headers'])
         return [binary_string(response['body'])]
+
+
+class Section(Alice):
+    def __init__(self, url_prefix: str, config, static_path: str = None, templates_path: str = None):
+        super(Section, self).__init__(config, static_path, templates_path)
+        self.router.url_prefix = url_prefix

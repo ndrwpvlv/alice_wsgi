@@ -13,17 +13,19 @@ class Router:
 
         :param static_path: Static files path, str
         """
+        self.url_prefix = None
         self.routes = {}  # {PATH: {VIEW_CLS:, METHODS_ALLOWED:, DECORATORS:, }, }
         self.redirects = {}  # {PATH: {REDIRECT_URL:, CODE:,}, }
         self.error_handlers = {}  # {CODE: HANDLER,}
         self.static_path = static_path
 
     def add_route(self, route: str, view_cls, methods: tuple = ('GET',), decorators: tuple = (), ):
-        self.routes[route.replace(' ', '')] = {'view_cls': view_cls, 'methods': methods, 'decorators': decorators,
-                                               'pattern': self.pattern_route(route)}
+        self.routes[self.route_url_prefix(route, self.url_prefix)] = {'view_cls': view_cls, 'methods': methods,
+                                                                      'decorators': decorators,
+                                                                      'pattern': self.pattern_route(route)}
 
     def add_redirect(self, route: str, redirect_url: str, code: int, ):
-        self.redirects[route] = {'redirect_url': redirect_url, 'code': code, }
+        self.redirects[self.route_url_prefix(route, self.url_prefix)] = {'redirect_url': redirect_url, 'code': code, }
 
     def add_error_handler(self, code: int, handler_func):
         self.error_handlers[code] = handler_func
@@ -31,6 +33,10 @@ class Router:
     def get_error_handler(self, code: int, method: str):
         handler = self.error_handlers.get(code)
         return getattr(handler, method.lower()) if handler else http_status
+
+    def add_section(self, module):
+        self.routes.update(module.router.routes)
+        self.redirects.update(module.router.redirects)
 
     @staticmethod
     def redirect_handler(redirect_url: str, code: int, ):
@@ -147,6 +153,10 @@ class Router:
         else:
             response = self.find_route_or_404(request)
         return response
+
+    @staticmethod
+    def route_url_prefix(route: str, url_prefix: str = None):
+        return '{}{}'.format(url_prefix or '', route)
 
 
 def http_status(code: int, template: str = '{} {}'):

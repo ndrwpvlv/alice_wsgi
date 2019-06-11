@@ -13,5 +13,5 @@ templates_path or self.config.TEMPLATES_PATH or '{}/templates/'.format(os.getcwd
 ```
 - To Router class was added method add_section(section) for registering created with Section class modules.
 ```
-section = Section('/section', Confic, static_path_of_section, templates_path_of_section)
+section = Section('/section', Config: object, static_path_of_section: str, templates_path_of_section: str)
 ```

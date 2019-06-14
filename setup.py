@@ -10,7 +10,7 @@ with open('requirements.txt') as fr:
 
 setup(
     name='alice_wsgi',
-    version='0.0.51',
+    version='0.0.5',
     packages=['alice_wsgi', ],
     url='https://github.com/ndrwpvlv/mimemiko',
     license='',
